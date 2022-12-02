@@ -21,24 +21,10 @@ export default defineNuxtConfig({
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-  ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '',
-  },
+  modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['consola'],
-    extend(config: NuxtConfig, { isClient }: { isClient: boolean }) {
-      if (isClient) {
-        config.optimization.splitChunks.maxSize = 122000;
-      }
-    },
   },
 } as NuxtConfig);

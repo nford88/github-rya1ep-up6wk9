@@ -1,15 +1,38 @@
 <template>
   <div class="main">
-    <h1>Debug Nuxt Logger</h1>
-    <p>
-      We have setup consola in nuxt.config.ts according to this guide AsyncData
-      f
-    </p>
-    <p>
-      Press the button below to force the error undefined error in the page and
-      examine the terminal
-    </p>
-    <button @click="forceFail()">Force Error</button>
+    <h1>Debug NuxtBridge Logger SSR</h1>
+    <ul>
+      Setup consola from serverLogging in utils/loggingUtils'
+    </ul>
+    <ul>
+      Imported this into nuxt.config.ts where it transforms all the nitro logs
+      (see terminal on startup)
+    </ul>
+    <ul>
+      Created plugins/logging.ts where the injected function to context
+      $serverLogging and also set the vue errorHandler as per description
+    </ul>
+    <ul>
+      index.vue contains an asyncData which throws 2 errors, one which reutrns a
+      standard console.log, the other which injects a message using
+      $serverLogging
+    </ul>
+    <ul>
+      Call 1 is just printing console.log message and bypassing consola handler
+      set in nuxt.config.ts
+    </ul>
+    <ul>
+      Call 2 is getting formatted as JSON as we directly call consola
+    </ul>
+    <ul>
+      Lets try force an internal error and check the Vue errorHandler -
+      uncomment lines 48 and 49 of index.vue
+    </ul>
+    <ul>
+      Check terminal, vue error handler is not catching any errors and the
+      messages are being printed as verbose when they should be formatted
+    </ul>
+    <ul></ul>
   </div>
 </template>
 
@@ -18,49 +41,25 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'IndexPage',
-  methods: {
-    forceFail() {
-      const test = null;
-      return test.dummy; // this is undefined and will break the async function
-    },
-  },
-  mounted() {
-    this.forceFail();
-  },
   async asyncData(context) {
     // this is undefined and will break the async function
-    // comment the two lines below to see the api fail and formatted correctly manually
-    const test = null;
-    return test.dummy;
+    // comment the two lines below to see the function fail
+    // const test = null;
+    // return test.dummy;
 
-    const { app, $serverLogging } = context;
+    const { $serverLogging } = context;
 
-    // failed api error with console
     try {
-      app.$axios.create({
-        httpsAgent: new https.Agent({ keepAlive: true }),
-      });
       //mispelt API so it will error
-      const response1 = app.$axios.get(
-        'https://poetrydb.org/title/Shakespeare/lines2.json'
-      );
-      return { response1 };
+      throw new Error();
     } catch (err) {
-      console.log(err.message);
+      console.log('Error in First Call');
     }
 
-    // failed api error with console
     try {
-      app.$axios.create({
-        httpsAgent: new https.Agent({ keepAlive: true }),
-      });
-      //mispelt API so it will error
-      const response2 = app.$axios.get(
-        'https://poetrydb.org/title/Shakespeare/lines3.json'
-      );
-      return { response2 };
+      throw new Error();
     } catch (err) {
-      $serverLogging.error({ message: 'Error in API2' });
+      $serverLogging.error('Error in Second Call');
     }
   },
 });
