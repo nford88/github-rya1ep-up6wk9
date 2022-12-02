@@ -1,0 +1,21 @@
+{
+  "name": "pcs",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "start": "nuxi preview",
+    "generate": "nuxi generate"
+  },
+  "dependencies": {
+    "@drunomics/nuxtjs-newrelic": "github:drunomics/nuxtjs-newrelic",
+    "@nuxtjs/axios": "^5.13.6",
+    "consola": "^2.15.3",
+    "newrelic": "^9.0.0",
+    "nuxi": "3.0.0-rc.12",
+    "nuxt-edge": "latest",
+    "vue": "^2.7.8",
+    "webpack": "^4.46.0",
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge",
+    "@nuxtjs/router": "^1.7.0"
+  }
+}
