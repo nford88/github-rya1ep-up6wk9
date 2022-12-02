@@ -1,6 +1,6 @@
 import consola from 'consola';
 
-export const serverLogging = consola.withTag('pcs').setReporters([
+export const serverLogging = consola.setReporters([
   {
     log: (e) => {
       process.stdout.write(JSON.stringify(e) + '\n');
