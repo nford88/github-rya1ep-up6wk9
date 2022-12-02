@@ -2,15 +2,16 @@
   <div class="main">
     <h1>Debug NuxtBridge Logger SSR</h1>
     <ul>
-      Setup consola from serverLogging in utils/loggingUtils'
+      Setup consola -> serverLogging in utils/loggingUtils'
     </ul>
     <ul>
-      Imported this into nuxt.config.ts where it transforms all the nitro logs
-      (see terminal on startup)
+      Imported this into nuxt.config.ts where it transforms all the nitro dev
+      logs to JSON (see terminal on startup)
     </ul>
     <ul>
       Created plugins/logging.ts where the injected function to context
-      $serverLogging and also set the vue errorHandler as per description
+      <strong>$serverLogging</strong>
+      and also set the vue errorHandler as per description
     </ul>
     <ul>
       index.vue contains an asyncData which throws 2 errors, one which reutrns a
@@ -22,17 +23,23 @@
       set in nuxt.config.ts
     </ul>
     <ul>
-      Call 2 is getting formatted as JSON as we directly call consola
+      Call 2 is calling $serverLogging and ormatted as JSON as we directly call
+      consola
     </ul>
     <ul>
       Lets try force an internal error and check the Vue errorHandler -
-      uncomment lines 48 and 49 of index.vue
+      uncomment lines 48 and 49 of index.vue and check terminal.
     </ul>
     <ul>
-      Check terminal, vue error handler is not catching any errors and the
-      messages are being printed as verbose when they should be formatted
+      vue error handler is not catching any errors. Nitro dev exception errors
+      are being printed as verbose when they should be formatted using consola.
     </ul>
-    <ul></ul>
+    <ul>
+      When you
+      <i>npm run build && npm run start</i>
+      which you would for hosting this SSR application, the terminal log for the
+      build uses consola but the served built version is verbose stdout
+    </ul>
   </div>
 </template>
 
